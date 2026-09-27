@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Himanshu Soni — DevOps &amp; Cloud Engineer</title>
+<meta name="description" content="Himanshu Soni is a DevOps &amp; Cloud Engineer specializing in GCP, Kubernetes, Terraform, and CI/CD automation for reliable enterprise infrastructure." />
+<meta name="author" content="Himanshu Soni" />
+<meta name="theme-color" content="#0b1020" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Himanshu Soni — DevOps &amp; Cloud Engineer" />
+<meta property="og:description" content="I build and automate the cloud infrastructure that keeps enterprise systems reliable, secure, and shipping fast." />
+
+<!-- Favicon: a terminal caret, grounded in the IaC/terminal world -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f7a57'/%3E%3Cpath d='M18 22l10 10-10 10' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='34' y1='44' x2='47' y2='44' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #080c18;
+    --surface: #10172a;
+    --surface-raised: #151e35;
+    --ink: #f4f7ff;
+    --muted: #a9b4ca;
+    --faint: #71809d;
+    --line: rgba(174, 193, 226, 0.14);
+    --line-strong: rgba(174, 193, 226, 0.27);
+    --accent: #61e7c1;
+    --accent-ink: #9df5dc;
+    --accent-soft: rgba(97, 231, 193, 0.11);
+    --violet: #9b8cff;
+    --radius: 18px;
+    --maxw: 1120px;
+    --font-display: "Space Grotesk", system-ui, sans-serif;
+    --font-body: "IBM Plex Sans", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; }
+
+  .container {
+    width: 100%;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Utility: mono eyebrow / labels ---------- */
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; line-height: 1.12; margin: 0; }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(8, 12, 24, 0.78);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+  }
+  .brand {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--ink);
+  }
+  .brand .caret { color: var(--accent); }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: var(--muted);
+    transition: color 0.18s ease;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 8px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--ink) !important;
+    transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .nav-cta:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: 1px solid var(--line-strong);
+    border-radius: 10px;
+    width: 42px;
+    height: 38px;
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after {
+    content: "";
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+    position: relative;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .nav-toggle span::before { position: absolute; top: -6px; }
+  .nav-toggle span::after { position: absolute; top: 6px; }
+
+  /* ---------- Sections ---------- */
+  section { padding: 112px 0; }
+  section + section { border-top: 1px solid var(--line); }
+
+  .section-head { margin-bottom: 44px; max-width: 640px; }
+  .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+  .section-head p:not(.eyebrow) { color: var(--muted); margin: 14px 0 0; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: 106px 0 88px;
+    background:
+      radial-gradient(circle at 11% 12%, rgba(97, 231, 193, 0.13), transparent 27rem),
+      radial-gradient(circle at 88% 24%, rgba(155, 140, 255, 0.18), transparent 26rem),
+      linear-gradient(135deg, #080c18 0%, #0c1429 55%, #0b1020 100%);
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: .45;
+    background-image: linear-gradient(rgba(174, 193, 226, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(174, 193, 226, .07) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 90%);
+  }
+  .hero-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(290px, .75fr); gap: 56px; align-items: center; }
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border: 1px solid rgba(97, 231, 193, .26);
+    padding: 7px 14px;
+    border-radius: 999px;
+    margin-bottom: 26px;
+  }
+  .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(15, 122, 87, 0.5);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(15, 122, 87, 0.45); }
+    70% { box-shadow: 0 0 0 8px rgba(15, 122, 87, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(15, 122, 87, 0); }
+  }
+
+  .hero h1 {
+    font-size: clamp(3.2rem, 7vw, 5.6rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .hero .lede {
+    font-size: clamp(1.08rem, 2vw, 1.3rem);
+    color: var(--ink);
+    max-width: 640px;
+    margin: 22px 0 0;
+    line-height: 1.5;
+  }
+  .hero .lede .quiet { color: var(--muted); }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+    padding: 11px 18px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    transition: transform 0.15s ease, background 0.18s ease, border-color 0.18s ease;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-ink); transform: translateY(-1px); }
+  .btn-ghost { border: 1px solid var(--line-strong); color: var(--ink); background: var(--surface); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent-ink); transform: translateY(-1px); }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* readout: mono facts grid, echoes a status/config output */
+  .readout {
+    margin-top: 60px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(16, 23, 42, .74);
+    backdrop-filter: blur(14px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow: hidden;
+  }
+  .readout div {
+    padding: 20px 22px;
+    border-right: 1px solid var(--line);
+  }
+  .readout div:last-child { border-right: none; }
+  .readout dt {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 8px;
+  }
+  .readout dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.02rem;
+    line-height: 1.3;
+  }
+
+  .signal-panel {
+    position: relative;
+    border: 1px solid rgba(174, 193, 226, .22);
+    border-radius: 22px;
+    padding: 1px;
+    background: linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,255,255,.02));
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .34);
+  }
+  .signal-inner { border-radius: 21px; overflow: hidden; background: #0d1529; }
+  .signal-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid var(--line); font-family: var(--font-mono); font-size: .69rem; letter-spacing: .08em; color: var(--faint); text-transform: uppercase; }
+  .signal-lights { display: flex; gap: 5px; }
+  .signal-lights i { display:block; width:7px; height:7px; border-radius:50%; background:var(--line-strong); }
+  .signal-lights i:first-child { background: var(--accent); }
+  .signal-body { padding: 24px; }
+  .signal-kicker { font-family: var(--font-mono); color: var(--accent); font-size: .74rem; letter-spacing:.08em; }
+  .signal-title { font-family: var(--font-display); font-size: 1.45rem; line-height:1.1; margin: 10px 0 24px; }
+  .signal-flow { display:flex; align-items:center; gap:9px; }
+  .signal-node { width: 43px; height:43px; display:grid; place-items:center; border:1px solid var(--line-strong); border-radius: 12px; color: var(--accent); background: var(--accent-soft); font-family: var(--font-mono); font-size:.78rem; }
+  .signal-line { height:1px; flex:1; background:linear-gradient(90deg, var(--accent), var(--violet)); position:relative; }
+  .signal-line::after { content:""; width:6px; height:6px; border-radius:50%; background:var(--violet); position:absolute; right:-1px; top:-2.5px; }
+  .signal-stats { display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top: 26px; }
+  .signal-stat { border:1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .signal-stat b { display:block; color: var(--ink); font-family:var(--font-display); font-size:1rem; }
+  .signal-stat span { display:block; margin-top:2px; color:var(--faint); font-family:var(--font-mono); font-size:.65rem; text-transform:uppercase; letter-spacing:.06em; }
+
+  /* ---------- About ---------- */
+  .about p:not(.eyebrow) {
+    font-size: 1.12rem;
+    line-height: 1.72;
+    max-width: 760px;
+    color: #d5ddef;
+  }
+  .about p:not(.eyebrow) + p { margin-top: 18px; }
+
+  /* ---------- Skills ---------- */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .skill-card {
+    background: linear-gradient(145deg, rgba(21, 30, 53, .98), rgba(15, 22, 40, .98));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color 0.2s ease;
+  }
+  .skill-card:hover { border-color: rgba(97, 231, 193, .45); transform: translateY(-3px); }
+  .skill-card h3 {
+    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    margin-bottom: 16px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--ink);
+    background: rgba(255,255,255,.045);
+    border: 1px solid var(--line);
+    padding: 5px 11px;
+    border-radius: 8px;
+  }
+
+  /* ---------- Experience ---------- */
+  .timeline { position: relative; }
+  .job {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 32px;
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+  }
+  .job:first-child { border-top: none; padding-top: 4px; }
+  .job-meta .company {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .job-meta .date {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--faint);
+    margin-top: 6px;
+  }
+  .job-meta .place {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--faint);
+    margin-top: 2px;
+  }
+  .live-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(15,122,87,0.5);
+    animation: pulse 2.4s infinite;
+    flex: none;
+  }
+  .job-body .role {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin-bottom: 4px;
+  }
+  .job-body .client {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-ink);
+    margin-bottom: 12px;
+  }
+  .job-body ul { margin: 10px 0 0; padding-left: 0; list-style: none; }
+  .job-body li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 9px;
+    color: #d1d9e9;
+  }
+  .job-body li::before {
+    content: "";
+    position: absolute;
+    left: 2px; top: 11px;
+    width: 6px; height: 6px;
+    border: 1.5px solid var(--accent);
+    border-radius: 2px;
+  }
+  .roles-nested { margin-top: 14px; }
+  .roles-nested .subrole {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 0;
+    border-top: 1px dashed var(--line);
+    font-size: 0.95rem;
+  }
+  .roles-nested .subrole span:last-child {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  /* ---------- Work / Projects ---------- */
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .project {
+    background: linear-gradient(145deg, rgba(21, 30, 53, .98), rgba(15, 22, 40, .98));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .project:hover { border-color: rgba(155, 140, 255, .65); transform: translateY(-5px); box-shadow: 0 18px 42px rgba(0,0,0,.2); }
+  .project .ctx {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 12px;
+  }
+  .project h3 { font-size: 1.18rem; margin-bottom: 10px; }
+  .project p { color: var(--muted); margin: 0 0 18px; font-size: 0.97rem; }
+  .project .stack { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
+  .project .stack .tag { font-size: 0.72rem; padding: 4px 9px; }
+
+  .project.cta-card {
+    background: var(--accent-soft);
+    border-color: rgba(97, 231, 193, .26);
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .project.cta-card h3 { color: var(--accent-ink); }
+  .project.cta-card a {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+  }
+  .project.cta-card a:hover { color: var(--accent); }
+
+  /* ---------- Education + Certs ---------- */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .edu-item { padding: 18px 0; border-top: 1px solid var(--line); }
+  .edu-item:first-of-type { border-top: none; padding-top: 0; }
+  .edu-item h3 { font-size: 1.02rem; margin-bottom: 4px; }
+  .edu-item .detail { color: var(--muted); font-size: 0.95rem; }
+  .edu-item .date { font-family: var(--font-mono); font-size: 0.74rem; color: var(--faint); margin-top: 4px; }
+
+  .cert-list { list-style: none; margin: 0; padding: 0; }
+  .cert-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 0;
+    border-top: 1px solid var(--line);
+    font-size: 0.97rem;
+  }
+  .cert-list li:first-child { border-top: none; }
+  .cert-list li::before {
+    content: "✓";
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    flex: none;
+  }
+  .honor {
+    margin-top: 24px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border: 1px solid #cfe8dd;
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: inline-block;
+  }
+
+  /* ---------- Contact / Footer ---------- */
+  .contact { text-align: center; padding: 100px 0; }
+  .contact h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); }
+  .contact p:not(.eyebrow) { color: var(--muted); max-width: 480px; margin: 16px auto 32px; }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 26px 0;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--faint);
+  }
+  .footer-inner a { color: var(--muted); text-decoration: none; }
+  .footer-inner a:hover { color: var(--ink); }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .readout { grid-template-columns: repeat(2, 1fr); }
+    .readout div:nth-child(2) { border-right: none; }
+    .readout div:nth-child(1), .readout div:nth-child(2) { border-bottom: 1px solid var(--line); }
+    .hero-layout, .skills-grid, .work-grid, .edu-grid { grid-template-columns: 1fr; }
+    .signal-panel { max-width: 470px; }
+    .job { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  @media (max-width: 640px) {
+    section { padding: 76px 0; }
+    .hero { padding: 78px 0 64px; }
+    .nav-toggle { display: inline-flex; }
+    .nav-links {
+      position: absolute;
+      top: 62px; left: 0; right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 24px 22px;
+      display: none;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: 8px 0; width: 100%; }
+    .nav-cta { margin-top: 6px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .dot, .live-dot { animation: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand"><span class="caret">&gt;_</span> himanshu&nbsp;soni</a>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact" class="nav-cta">Get in touch</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-layout">
+        <div>
+          <div class="status-chip"><span class="dot"></span> Senior DevOps Engineer @ Onix — Hyderabad, India</div>
+          <h1>Himanshu Soni</h1>
+          <p class="lede">I design the cloud foundations behind <strong>reliable, secure, fast-moving products.</strong> <span class="quiet">Five years across GCP, Kubernetes, and CI/CD—turning complex operations into repeatable, version-controlled systems.</span></p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg>
+              Get in touch
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/himanshu2399" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.72-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.05.78 2.12v3.14c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/></svg>
+              GitHub
+            </a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/himanshu-soni-6b397415b/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+        <aside class="signal-panel" aria-label="Engineering focus">
+          <div class="signal-inner">
+            <div class="signal-head"><span>platform status</span><span class="signal-lights"><i></i><i></i><i></i></span></div>
+            <div class="signal-body">
+              <div class="signal-kicker">// Engineering focus</div>
+              <div class="signal-title">Build once.<br>Operate with confidence.</div>
+              <div class="signal-flow"><div class="signal-node">git</div><div class="signal-line"></div><div class="signal-node">ci</div><div class="signal-line"></div><div class="signal-node">gke</div></div>
+              <div class="signal-stats"><div class="signal-stat"><b>GCP</b><span>Cloud platform</span></div><div class="signal-stat"><b>IaC</b><span>Terraform-led</span></div><div class="signal-stat"><b>CI/CD</b><span>Automated delivery</span></div><div class="signal-stat"><b>K8s</b><span>Scaled workloads</span></div></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <dl class="readout">
+        <div>
+          <dt>Role</dt>
+          <dd>Senior DevOps Engineer</dd>
+        </div>
+        <div>
+          <dt>Focus</dt>
+          <dd>Cloud &amp; Automation</dd>
+        </div>
+        <div>
+          <dt>Experience</dt>
+          <dd>5+ Years</dd>
+        </div>
+        <div>
+          <dt>Based in</dt>
+          <dd>Hyderabad, India</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about reveal">
+    <div class="container">
+      <p class="eyebrow">About</p>
+      <p>I'm a DevOps &amp; Cloud Engineer focused on leveraging tools like GitLab, Jenkins, Terraform, and Kubernetes to streamline cloud operations. Across roles at Onix, Health Catalyst, Searce, and Cognizant, I've built expertise in CI/CD pipelines, Kubernetes management, and cloud infrastructure provisioning — mostly on Google Cloud.</p>
+      <p>I care about simplifying complex systems and making environments robust, automated, and efficient. Whether it's redefining infrastructure to manage petabytes of data, migrating a healthcare platform from on-prem to GCP, or hardening the deployment pipeline for a national bank, I aim to improve reliability and the day-to-day experience of the developers who depend on it. BTech (Honours) in Computer Science from Shri Shankaracharya Technical Campus.</p>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Stack</p>
+        <h2>Tools &amp; technologies</h2>
+        <p>The platforms and practices I reach for to keep infrastructure automated and reliable.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Cloud Platforms</h3>
+          <div class="tags">
+            <span class="tag">Google Cloud (GCP)</span>
+            <span class="tag">GKE</span>
+            <span class="tag">Artifact Registry / GCR</span>
+            <span class="tag">VPC</span>
+            <span class="tag">Cloud IAM</span>
+            <span class="tag">On-prem → Cloud migration</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Infrastructure as Code</h3>
+          <div class="tags">
+            <span class="tag">Terraform</span>
+            <span class="tag">Helm</span>
+            <span class="tag">GitOps</span>
+            <span class="tag">Configuration management</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>CI/CD &amp; Delivery</h3>
+          <div class="tags">
+            <span class="tag">Jenkins</span>
+            <span class="tag">GitLab CI</span>
+            <span class="tag">Blue/Green</span>
+            <span class="tag">Canary releases</span>
+            <span class="tag">Automated builds &amp; tests</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Containers &amp; Orchestration</h3>
+          <div class="tags">
+            <span class="tag">Docker</span>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">HPA / VPA autoscaling</span>
+            <span class="tag">Network policies</span>
+            <span class="tag">Resource quotas</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Observability</h3>
+          <div class="tags">
+            <span class="tag">Prometheus</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">Cloud Monitoring</span>
+            <span class="tag">Cloud Logging</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Security &amp; Reliability</h3>
+          <div class="tags">
+            <span class="tag">IAM hardening</span>
+            <span class="tag">Workload Identity</span>
+            <span class="tag">Secret management</span>
+            <span class="tag">Disaster recovery</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Experience</p>
+        <h2>Where I've worked</h2>
+      </div>
+      <div class="timeline">
+
+        <article class="job">
+          <div class="job-meta">
+            <div class="company"><span class="live-dot"></span> Onix</div>
+            <div class="date">Apr 2026 — Present</div>
+            <div class="place">Hyderabad</div>
+          </div>
+          <div class="job-body">
+            <div class="role">Senior DevOps Engineer</div>
+            <ul>
+              <li>Collaborated with Wells Fargo's DR enablement team to strengthen disaster-recovery readiness for large-scale applications.</li>
+              <li>Redefined infrastructure with Terraform, enabling efficient management of petabytes of data.</li>
+              <li>Implemented DevOps best practices to streamline processes and improve system reliability.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-meta">
+            <div class="company">Health Catalyst</div>
+            <div class="date">Dec 2025 — Mar 2026</div>
+            <div class="place">Hyderabad</div>
+          </div>
+          <div class="job-body">
+            <div class="role">Senior DevOps Engineer</div>
+            <ul>
+              <li>Led migration from on-prem (Lunavi) to GCP, building the complete configuration from scratch.</li>
+              <li>Supported internal healthcare product development and ongoing maintenance.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-meta">
+            <div class="company">Searce Inc</div>
+            <div class="date">Jan 2025 — Dec 2025</div>
+            <div class="place">Bengaluru</div>
+          </div>
+          <div class="job-body">
+            <div class="role">Senior Cloud Engineer</div>
+            <div class="client">Client: HDFC Bank — Cloud &amp; DevOps Automation</div>
+            <ul>
+              <li>Built and maintained Jenkins CI/CD pipelines automating builds, tests, and deployments across multiple banking applications.</li>
+              <li>Managed and optimized GKE workloads — namespaces, HPA/VPA autoscaling, resource quotas, and network policies.</li>
+              <li>Developed Helm charts to streamline releases and enforce deployment standards, with GitOps-aligned, version-controlled deployments.</li>
+              <li>Automated provisioning with Terraform and GCP-native services (GKE, Artifact Registry, VPC, IAM).</li>
+              <li>Strengthened reliability with Prometheus, Grafana, Cloud Monitoring, and Cloud Logging; hardened security via IAM and Workload Identity.</li>
+              <li>Reduced manual overhead through blue/green and canary rollout strategies and consistent environments.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job">
+          <div class="job-meta">
+            <div class="company">Cognizant</div>
+            <div class="date">Jul 2021 — Dec 2024</div>
+            <div class="place">Hyderabad</div>
+          </div>
+          <div class="job-body">
+            <div class="role">Cloud &amp; DevOps Engineer</div>
+            <p style="color:var(--muted);margin:2px 0 0;font-size:0.97rem;">Progressed through cloud engineering roles over 3.5 years, building a foundation in GCP and DevOps automation.</p>
+            <div class="roles-nested">
+              <div class="subrole"><span>Associate — Cloud Engineer</span><span>Oct 2023 — Dec 2024</span></div>
+              <div class="subrole"><span>Programmer Analyst (Digital Cadre) — Cloud Engineer</span><span>Jul 2022 — Oct 2023</span></div>
+              <div class="subrole"><span>Programmer Analyst Trainee — GCP Cloud</span><span>Jul 2021 — Jul 2022</span></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK / PROJECTS -->
+  <section id="work" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Selected work</p>
+        <h2>Engineering highlights</h2>
+        <p>A few engagements that show the kind of infrastructure problems I take on.</p>
+      </div>
+      <div class="work-grid">
+
+        <article class="project">
+          <div class="ctx">Onix · Wells Fargo</div>
+          <h3>Enterprise DR Enablement</h3>
+          <p>Redefined infrastructure as code to improve disaster-recovery readiness for large-scale applications, managing petabytes of data with predictable, repeatable provisioning.</p>
+          <div class="stack">
+            <span class="tag">Terraform</span>
+            <span class="tag">Disaster Recovery</span>
+            <span class="tag">GCP</span>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="ctx">Health Catalyst</div>
+          <h3>On-Prem → GCP Migration</h3>
+          <p>Migrated a healthcare platform from on-prem (Lunavi) to Google Cloud, standing up the full environment and configuration from scratch for a reliable, cloud-native footprint.</p>
+          <div class="stack">
+            <span class="tag">GCP</span>
+            <span class="tag">Migration</span>
+            <span class="tag">IaC</span>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="ctx">Searce · HDFC Bank</div>
+          <h3>Banking CI/CD &amp; GKE Platform</h3>
+          <p>Delivered Jenkins pipelines, Helm-based releases, and autoscaling GKE workloads for a national bank — with Prometheus/Grafana observability and IAM hardening that cut manual ops and standardized deployments.</p>
+          <div class="stack">
+            <span class="tag">Jenkins</span>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">Helm</span>
+            <span class="tag">Prometheus</span>
+          </div>
+        </article>
+
+        <article class="project cta-card">
+          <div class="ctx">Open source &amp; code</div>
+          <h3>More on GitHub</h3>
+          <p>Configs, automation scripts, and experiments live on my GitHub.</p>
+          <a href="https://github.com/himanshu2399" target="_blank" rel="noopener">github.com/himanshu2399 →</a>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION + CERTS -->
+  <section id="education" class="reveal">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Background</p>
+        <h2>Education &amp; certifications</h2>
+      </div>
+      <div class="edu-grid">
+        <div>
+          <p class="mono" style="margin-bottom:18px;">Education</p>
+          <div class="edu-item">
+            <h3>Shri Shankaracharya Technical Campus</h3>
+            <div class="detail">BTech (Honours), Computer Science Engineering</div>
+            <div class="date">2017 — 2021</div>
+          </div>
+          <div class="edu-item">
+            <h3>Vijnana Vihara Residential School</h3>
+            <div class="detail">Senior Secondary</div>
+            <div class="date">2009 — 2015</div>
+          </div>
+          <div class="honor">★ Best Performer of the Month</div>
+        </div>
+        <div>
+          <p class="mono" style="margin-bottom:18px;">Certifications</p>
+          <ul class="cert-list">
+            <li>JavaScript Fundamentals</li>
+            <li>Java (Basic)</li>
+            <li>Build a Simple App in Android Studio with Java</li>
+            <li>IBM Blockchain Essentials V2</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact reveal">
+    <div class="container">
+      <p class="eyebrow" style="justify-content:center;">Contact</p>
+      <h2>Let's build something reliable.</h2>
+      <p>Open to conversations about DevOps, cloud infrastructure, and platform reliability. The fastest way to reach me is email.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:himanshusoni.vvrs@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg>
+          himanshusoni.vvrs@gmail.com
+        </a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/himanshu-soni-6b397415b/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/himanshu2399" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© <span id="year"></span> Himanshu Soni</span>
+    <span>Built with care · Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+  // Footer year
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Mobile nav toggle
+  var toggle = document.getElementById("navToggle");
+  var links = document.getElementById("navLinks");
+  toggle.addEventListener("click", function () {
+    var open = links.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  links.addEventListener("click", function (e) {
+    if (e.target.tagName === "A") {
+      links.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  // Scroll reveal
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var revealEls = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) {
+    revealEls.forEach(function (el) { el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    revealEls.forEach(function (el) { io.observe(el); });
+  }
+</script>
+
+</body>
+</html>
